@@ -1,33 +1,118 @@
-.App {
-  text-align: center;
+.App
+{
+	text-align: center;
+}
+/*
+.App-link
+{
+	color: #61dafb;
+}
+*/
+
+.App-wrapper
+{
+	background-color: #FFFFFF;
+	/* min-height:       100vh; */
+	max-width:        640px;
+	margin:           0 auto;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.login
+{
+	display:        flex;
+	flex-direction: column;
+	margin:         0 auto;
+	padding:        20px 0;
+}
+.login input
+{
+	/* width:   100%; */
+	flex: 1;
+	padding: 12px;
+}
+.login ul
+{
+	list-style:       none;
+	background-color: rgba(255,255,255,.5);
+	border-radius:    2px;
+	box-shadow:       0 2px 5px rgba(0,0,0,.5);
+	padding:          0;
+}
+.login li
+{
+	text-align:  left;
+	height:      28px;
+	padding:     10px 20px;
+	cursor:      pointer;
+}
+.login li.connect::after
+{
+	font-weight: bold;
+	text-align:  right;
+	float:       right;
+	content:     "Connect";
+}
+.login li.create::after
+{
+	font-weight: bold;
+	text-align:  right;
+	float:       right;
+	content:     "Create";
+}
+.login li:hover
+{
+	background-color: #F3E5AB;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.disconnect
+{
+	position:         absolute;
+	top:              20px;
+	right:            20px;
+	padding:          10px;
+	color:            #ffffff;
+	border:           1px solid #1d2124;
+	background-color: #23272b;
+	border-radius:    3px;
+	cursor:           pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.userpanel
+{
+	display:        flex;
+	flex-direction: column;
+	margin:         0 auto;
+	padding:        20px 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.footnote
+{
+	position: absolute;
+	bottom:   0;
+	left:     0;
+	width:    100%;
+	padding:  10px 0;
+	border:   1px solid;
+}
+.success
+{
+	color:            #155724;
+	background-color: #d4edda;
+	border-color:     #c3e6cb;
+}
+.warning
+{
+	color:            #856404;
+	background-color: #fff3cd;
+	border-color:     #ffeeba;
+}
+.error
+{
+	color:            #721c24;
+	background-color: #f8d7da;
+	border-color:     #f5c6cb;
+}
+.clickable
+{
+	cursor: pointer;
 }
