@@ -1,17 +1,18 @@
 {
-  "name": "universal-app",
-  "version": "0.1.0",
+  "name": "uuap-front",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "ethers": "^4.0.27",
     "ethers-ens": "^0.2.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",
+    "react-cookie": "^3.0.8",
     "universal-login-sdk": "^0.1.11"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:dev": "universal-login start:dev",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -24,10 +25,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "ethers": "^4.0.27",
-    "react-cookie": "^3.0.8",
-    "universal-login-ops": "^0.1.9"
-  }
+  ]
 }
