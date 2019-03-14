@@ -1,0 +1,25 @@
+header
+{
+	display:          flex;
+	padding:          20px 0;
+	background-color: #23272b;
+	align-items:      center;
+	font-size:        calc(10px + 2vmin);
+	color:            #ffffff;
+	height:           100px;
+	align-items:      center;
+	justify-content:  center;
+}
+
+header .logo
+{
+	flex: 1;
+	height: 100%;
+}
+
+header .title
+{
+	color:       #FAE900;
+	font-size:   1em;
+	font-weight: 700;
+}

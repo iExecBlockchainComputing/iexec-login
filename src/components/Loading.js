@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import "./Loading.css";
+import "../css/Loading.css";
 
 class Loading extends Component
 {
 	render()
 	{
 		return (
-			<div className="App-loading">
+			<div className="loading-view">
 				<svg xmlns="http://www.w3.org/2000/svg" width="100" viewBox="0 0 250 250" preserveAspectRatio="xMidYMid meet">
 					<path className="path" stroke="#FAE900" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" strokeMiterlimit="10" strokeDasharray="200" strokeDashoffset="400" fill="none" d="M125,237.6c-15.2,0-29.9-3-43.8-8.9c-13.4-5.7-25.5-13.8-35.8-24.1c-10.3-10.3-18.5-22.4-24.1-35.8
 						c-5.9-13.9-8.9-28.6-8.9-43.8s3-29.9,8.9-43.8C26.9,67.8,35,55.7,45.4,45.4C55.7,35,67.8,26.9,81.2,21.3

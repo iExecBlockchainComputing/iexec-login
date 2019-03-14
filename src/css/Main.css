@@ -1,0 +1,18 @@
+.main-view
+{
+	background-color: #e0e0e0;
+	text-align:       center;
+	min-height:       100vh;
+	min-width:        100vw;
+	padding:          20px;
+}
+
+.main-view .container
+{
+	max-width: 60vw;
+}
+
+.main-view .card
+{
+	margin: 20px;
+}
