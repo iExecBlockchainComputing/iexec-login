@@ -13,17 +13,6 @@ class Login extends Component
 			connections: [],
 			creations:   [],
 		};
-		this.props.services.storageService.getIdentity().then(this.login.bind(this));
-	}
-
-	async login(credentials)
-	{
-		if (credentials)
-		{
-			this.props.services.wallet = credentials;
-			this.props.services.storageService.storeIdentity(credentials);
-			this.props.setView('Main', { loading: false });
-		}
 	}
 
 	async update(event)
@@ -33,36 +22,25 @@ class Login extends Component
 			this.props.services.config.ensDomains
 			.filter(domain => label && domain.startsWith(node ? node : ""))
 			.map(domain => [label, domain].join('.'))
-			.map(username => this.props.services.sdk.identityExist(username).then(wallet => [username, wallet]))
+			.map(name => this.props.services.sdk.identityExist(name).then(address => [name, address]))
 		)
 		.then(results => {
 			this.setState({
-				connections: results.filter(([username, wallet]) =>  wallet),
-				creations:   results.filter(([username, wallet]) => !wallet),
+				connections: results.filter(([name, address]) =>  address),
+				creations:   results.filter(([name, address]) => !address),
 			})
 		})
 		.catch(console.error);
 	}
 
-	async creation(username, event)
+	async creation(name, event)
 	{
-		this.props.setView('Login', { loading: true });
-
-		this.props.services.sdk.create(username)
-		.then(([privateKey, contractAddress]) => this.login.bind(this)({privateKey, contractAddress}))
-		.catch(e => {
-			console.error(e);
-			this.props.setView('Login', { loading: false });
-		})
+		this.props.services.identity.create(name);
 	}
 
-	async connection(contractAddress, event)
+	async connection(address, event)
 	{
-		console.log("Not implemented yet.");
-		// this.sdk.connect(contractAddress).then(privateKey => {
-		//	this.login.bind(this)({privateKey, contractAddress})
-		// })
-
+		this.props.services.identity.connection(address);
 	}
 
 	render()
@@ -78,13 +56,13 @@ class Login extends Component
 						<input type="text" className="form-control" placeholder="your username" onChange={this.update.bind(this)}/>
 						<ul className="shadow">
 							{
-								this.state.connections.map(([ username, wallet ]) =>
-									<li className="connection" onClick={this.connection.bind(this, wallet )} key={username}>{username}</li>
+								this.state.connections.map(([ name, address ]) =>
+									<li className="connection" onClick={this.connection.bind(this, address )} key={name}>{name}</li>
 								)
 							}
 							{
-								this.state.creations.map(([ username, wallet ]) =>
-									<li className="creation" onClick={this.creation.bind(this, username)} key={username}>{username}</li>
+								this.state.creations.map(([ name, address ]) =>
+									<li className="creation" onClick={this.creation.bind(this, name)} key={name}>{name}</li>
 								)
 							}
 						</ul>
@@ -102,7 +80,6 @@ class Login extends Component
 Login.propTypes =
 {
 	services: PropTypes.object,
-	setView:  PropTypes.func,
 };
 
 export default Login;

@@ -1,6 +1,7 @@
 module.exports = Object.freeze({
 	jsonRpcUrl: "http://localhost:18545",
 	relayerUrl: "http://localhost:3311",
+	ensAddress: "0x67AC97e1088C332cBc7a7a9bAd8a4f7196D5a1Ce",
 	ensDomains: [
 		"mylogin.eth",
 		"universal-id.eth",
