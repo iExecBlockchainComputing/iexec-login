@@ -4,14 +4,11 @@ import PropTypes from 'prop-types';
 import { utils, Contract, Wallet } from 'ethers';
 import ERC1836 from 'erc1836/build/contracts/ERC1836DelegateBase.json'
 
-
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes, faArrowCircleUp   } from '@fortawesome/free-solid-svg-icons'
 
-import Header from './Header';
+// import Header from './Header';
 import "../css/Main.css";
-
 
 class Main extends Component
 {

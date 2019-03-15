@@ -1,5 +1,5 @@
 {
-  "name": "uuap-front",
+  "name": "iexec-login",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test":  "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
