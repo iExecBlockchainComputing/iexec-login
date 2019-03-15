@@ -3,9 +3,10 @@ import {EventEmitter} from 'fbemitter';
 import EthereumIdentitySDK from 'universal-login-sdk';
 import {providers} from 'ethers';
 
-import StorageService  from './StorageService';
-import EnsService      from './EnsService';
-import IdentityService from './IdentityService';
+import StorageService   from './StorageService';
+import EnsService       from './EnsService';
+import IdentityService  from './IdentityService';
+import ListeningService from './ListeningService';
 
 class Services
 {
@@ -18,7 +19,7 @@ class Services
 		this.sdk            = new EthereumIdentitySDK(this.config.relayerUrl, this.provider);
 		this.ensService     = new EnsService(this.sdk, this.provider, this.config);
 		this.identity       = new IdentityService(this.sdk, this.emitter, this.storageService, this.config);
-
+		this.listening      = new ListeningService(this.sdk, console.log);
 	}
 
 	start()

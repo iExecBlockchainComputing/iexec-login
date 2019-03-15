@@ -1,0 +1,14 @@
+.accountmanagement-view .toggle
+{
+	position:  absolute;
+	top:       10px;
+	right:     10px;
+	font-size: 2em;
+}
+.accountmanagement-view .notification
+{
+	position:  inherit;
+	top:       -.2em;
+	right:     -.2em;
+	font-size: .5em;
+}

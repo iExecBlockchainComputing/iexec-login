@@ -11,6 +11,16 @@ code
 {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+code.address
+{
+	display: block;
+	white-space: pre;
+	overflow: scroll;
+}
+code.address::-webkit-scrollbar
+{
+	display: none;
+}
 
 .clickable
 {

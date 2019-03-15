@@ -36,6 +36,11 @@
 	font-weight: 700;
 }
 
+.login-view .form-control:focus
+{
+	color: #ffffff;
+}
+
 .login-view input
 {
 	flex: 1;

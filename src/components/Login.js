@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
+import { MDBInput } from 'mdbreact';
+
 import logo from '../assets/logo.svg';
 import "../css/Login.css";
 
@@ -40,7 +42,12 @@ class Login extends Component
 
 	async connection(address, event)
 	{
-		this.props.services.identity.connection(address);
+		this.props.services.identity.connect(address);
+	}
+
+	async import(encrypted, password)
+	{
+		this.props.services.identity.import(null, null).catch(console.error);
 	}
 
 	render()
@@ -53,18 +60,18 @@ class Login extends Component
 						<span className="title">iExec Login</span>
 					</div>
 					<div className="login-body">
-						<input type="text" className="form-control" placeholder="your username" onChange={this.update.bind(this)}/>
+						<MDBInput label="Username" className="input" onChange={this.update.bind(this)}/>
 						<ul className="shadow">
-							{
-								this.state.connections.map(([ name, address ]) =>
-									<li className="connection" onClick={this.connection.bind(this, address )} key={name}>{name}</li>
-								)
-							}
-							{
-								this.state.creations.map(([ name, address ]) =>
-									<li className="creation" onClick={this.creation.bind(this, name)} key={name}>{name}</li>
-								)
-							}
+						{
+							this.state.connections.map(([ name, address ]) =>
+								<li className="connection" onClick={this.connection.bind(this, address )} key={name}>{name}</li>
+							)
+						}
+						{
+							this.state.creations.map(([ name, address ]) =>
+								<li className="creation" onClick={this.creation.bind(this, name)} key={name}>{name}</li>
+							)
+						}
 						</ul>
 					</div>
 				</div>
@@ -72,10 +79,6 @@ class Login extends Component
 		);
 	}
 }
-				// <ul className="shadow table-dark">
-				// 	{ this.state.connections.map(([ username, wallet ]) => <li className="connection" onClick={this.connection.bind(this, wallet )} key={username}>{username}</li>) }
-				// 	{ this.state.creations.map(([ username, wallet ]) => <li className="creation" onClick={this.creation.bind(this, username)} key={username}>{username}</li>) }
-				// </ul>
 
 Login.propTypes =
 {
