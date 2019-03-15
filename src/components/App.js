@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import ContentContainer from './ContentContainer';
+import Root     from './Root';
 import Services from '../services/Services';
 
 class App extends Component
@@ -25,7 +25,7 @@ class App extends Component
 	render()
 	{
 		return (
-			<ContentContainer services={this.services} />
+			<Root services={this.services} />
 		);
 	}
 }

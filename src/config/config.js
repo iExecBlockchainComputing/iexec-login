@@ -6,7 +6,10 @@ module.exports = Object.freeze({
 		"mylogin.eth",
 		"universal-id.eth",
 		"popularapp.eth",
-		"users.iexec.eth"
+		"users.iexec.eth",
+	],
+	assets: [
+		"0x0E2365e86A50377c567E1a62CA473656f0029F1e",
 	],
 	gasToken:        "0x0E2365e86A50377c567E1a62CA473656f0029F1e",
 	delegateUUID:    "0xa1e3d116360d73112f374a2ed4cd95388cd39eaf5a7986eb95efa60ae0ffda4d",

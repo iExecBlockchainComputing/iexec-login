@@ -5,12 +5,6 @@ import { MDBCard, MDBCardHeader, MDBCardBody, MDBBtn, MDBIcon, MDBInput } from '
 
 class TransactionInterface extends Component
 {
-	constructor(props)
-	{
-		super(props);
-		this.state = {};
-	}
-
 	async transaction(event)
 	{
 		event.preventDefault()

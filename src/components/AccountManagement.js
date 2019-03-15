@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBIcon, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import { MDBContainer, MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBRow, MDBCol, MDBIcon } from 'mdbreact';
 import { utils, Contract } from 'ethers';
-import ERC1836 from 'erc1836/build/contracts/ERC1836DelegateBase.json'
 import copy from 'copy-to-clipboard';
+
+import ERC1836 from 'erc1836/build/contracts/ERC1836DelegateBase.json'
 
 import "../css/AccountManagement.css";
 
@@ -28,24 +29,26 @@ class AccountManagement extends Component
 
 	async refresh()
 	{
-		(new Contract(this.props.services.identity.wallet.proxy, ERC1836.abi, this.props.services.provider))
-			.UUID()
-			.then(uuid => this.setState({
-				delegate_valid: uuid === process.env.REACT_APP_DELEGATEUUID
-			}))
-			.catch(e => this.setState({
-				delegate_valid: false
-			}));
-
-		(new Contract(this.props.services.identity.wallet.proxy, ERC1836.abi, this.props.services.provider))
-			.delegate()
-			.then(delegate => this.setState({
-				delegate_current: delegate,
-				delegate_upgrade: delegate !== process.env.REACT_APP_DELEGATEADDR
-			}))
-			.catch(e => this.setState({
-				delegate_upgrade: false
-			}));
+		Promise.all([
+			(new Contract(this.props.services.identity.wallet.proxy, ERC1836.abi, this.props.services.provider)).UUID(),
+			(new Contract(this.props.services.identity.wallet.proxy, ERC1836.abi, this.props.services.provider)).delegate(),
+		])
+		.then(([uuid, delegate]) => {
+			let delegate_current = delegate;
+			let delegate_valid   = uuid === process.env.REACT_APP_DELEGATEUUID;
+			let delegate_upgrade = delegate !== process.env.REACT_APP_DELEGATEADDR;
+			this.setState({ delegate_current, delegate_valid, delegate_upgrade });
+			if      (!delegate_valid ) { this.props.services.emitter.emit('notification', 'error',   'Invalid delegate' ); }
+			else if (delegate_upgrade) { this.props.services.emitter.emit('notification', 'warning', 'Upgrade available'); }
+		})
+		.catch(e => {
+			this.setState({
+				delegate_current: null,
+				delegate_valid:   false,
+				delegate_upgrade: false,
+			});
+			console.error(e);
+		});
 	}
 
 	async upgrade(event)
@@ -60,8 +63,14 @@ class AccountManagement extends Component
 				data:  updateData,
 				value: "0",
 			})
-			.then(this.refresh.bind(this))
-			.catch(console.error);
+			.then(() => {
+				this.props.services.emitter.emit('notification', 'success', 'Upgrade successful');
+				this.refresh();
+			})
+			.catch(e => {
+				this.props.services.emitter.emit('notification', 'error', 'Upgrade failled');
+				console.error(e);
+			});
 		}
 		catch (e)
 		{
@@ -81,16 +90,18 @@ class AccountManagement extends Component
 
 	async disconnect(event)
 	{
-		this.props.services.identity.disconnect().then(() => this.props.services.emitter.emit('setView', 'Login'));
+		this.props.services.identity.disconnect().then(() => {
+			this.props.services.emitter.emit('notification', 'error', 'Disconnected');
+			this.props.services.emitter.emit('setView', 'Login');
+		});
 	}
 
 	render()
 	{
 		return (
 			<MDBContainer className="accountmanagement-view">
-				<MDBIcon icon="user-circle" className="toggle clickable" onClick={this.toggle.bind(this)}>
-					{ this.state.delegate_upgrade ? <MDBIcon icon="circle" className="notification text-warning"/> : null }
-				</MDBIcon>
+				<MDBIcon icon="user-circle" className="fa-3x toggle clickable" onClick={this.toggle.bind(this)}></MDBIcon>
+				{ this.state.delegate_upgrade ? <MDBIcon icon="circle" className="fa-1x notification text-warning"/> : null }
 
 
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle.bind(this)} fullHeight position="right">

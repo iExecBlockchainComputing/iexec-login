@@ -5,13 +5,7 @@ import { MDBCard, MDBCardHeader, MDBCardBody, MDBBtn, MDBIcon, MDBInput } from '
 
 class SignatureInterface extends Component
 {
-	constructor(props)
-	{
-		super(props);
-		this.state = {};
-	}
-
-	async signMessage(event)
+	signMessage(event)
 	{
 		event.preventDefault();
 		this.props.services.identity.signMessage(event.target.msg.value)

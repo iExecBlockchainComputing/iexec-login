@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
+import Notifications from './Notifications';
 import Loading       from './Loading';
 import Login         from './Login';
 import LoginImport   from './LoginImport';
@@ -8,7 +9,7 @@ import Main          from './Main';
 
 import { scrollTo } from '../utils';
 
-class ContentContainer extends Component
+class Root extends Component
 {
 	constructor(props)
 	{
@@ -38,25 +39,26 @@ class ContentContainer extends Component
 	render()
 	{
 		return (
-			<div>
+			<>
+			<Notifications emitter={this.props.services.emitter}/>
 			{ this.state.viewParameters.loading ? <Loading/> : null }
 			{
-				  (this.state.view === 'Login')
-				? <Login services={this.props.services}/>
-				: (this.state.view === 'LoginImport')
-				? <LoginImport services={this.props.services}/>
-				: (this.state.view === 'Main')
-				? <Main services={this.props.services}/>
-				: <div>Oups, nothing to render</div>
+			  (this.state.view === 'Login')
+			? <Login services={this.props.services}/>
+			: (this.state.view === 'LoginImport')
+			? <LoginImport services={this.props.services}/>
+			: (this.state.view === 'Main')
+			? <Main services={this.props.services}/>
+			: <div>Oups, nothing to render</div>
 			}
-			</div>
+			</>
 		);
 	}
 }
 
-ContentContainer.propTypes =
+Root.propTypes =
 {
 	services: PropTypes.object
 };
 
-export default ContentContainer;
+export default Root;
