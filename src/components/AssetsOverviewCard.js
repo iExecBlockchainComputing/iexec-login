@@ -6,7 +6,7 @@ import {
 	MDBCardBody,
 	MDBCardHeader,
 	MDBTable,
-	MDBTableBody
+	MDBTableBody,
 	MDBTableHead,
 } from 'mdbreact';
 

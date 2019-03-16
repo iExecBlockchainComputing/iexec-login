@@ -43,7 +43,7 @@ class TransactionCard extends Component
 				data:  data,
 				value: Math.floor(parseFloat(value)*10**18).toString(),
 			})
-			.then (() => this.props.services.emitter.emit('notification', 'success', 'Transaction succesfull'))
+			.then ((nonce) => this.props.services.emitter.emit('notification', 'success', 'Transaction succesfull'))
 			.catch((e) => this.props.services.emitter.emit('notification', 'error', 'Error during transaction' + e));
 		})
 	}
