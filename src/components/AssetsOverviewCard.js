@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
 import {
+	MDBBtn,
 	MDBCard,
 	MDBCardBody,
 	MDBCardHeader,
+	MDBIcon,
 	MDBTable,
 	MDBTableBody,
 	MDBTableHead,
@@ -91,6 +93,10 @@ class AssetsOverviewCard extends Component
 						}
 						</MDBTableBody>
 					</MDBTable>
+					<MDBBtn gradient="ripe-malinka" className="m-3 py-2">
+						Buy tokens
+						<MDBIcon icon="shopping-cart" className="ml-1" />
+					</MDBBtn>
 				</MDBCardBody>
 			</MDBCard>
 		);
