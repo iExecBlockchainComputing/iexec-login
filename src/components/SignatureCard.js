@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBBtn, MDBIcon, MDBInput } from 'mdbreact';
+import {
+	MDBCard,
+	MDBCardBody,
+	MDBCardHeader,
+} from 'mdbreact';
 
-class SignatureInterface extends Component
+import SignatureModal             from "./SignatureModal";
+import SignatureVerificationModal from "./SignatureVerificationModal";
+
+class SignatureCard extends Component
 {
 	signMessage(event)
 	{
@@ -14,6 +21,7 @@ class SignatureInterface extends Component
 			console.log("signature:", signature);
 		})
 		.catch(console.error);
+
 	}
 
 	render()
@@ -21,24 +29,21 @@ class SignatureInterface extends Component
 		return (
 			<MDBCard>
 				<MDBCardHeader>
-					Sign message
+					Message signatures
 				</MDBCardHeader>
 				<MDBCardBody>
-					<form className="col-8 offset-2" onSubmit={this.signMessage.bind(this)}>
-						<MDBInput type="textarea" label="Message" name="msg"/>
-						<MDBBtn color="primary" className="m-0 py-2" type="submit">
-							Sign message<MDBIcon icon="signature" className="ml-1" />
-						</MDBBtn>
-					</form>
+					<SignatureModal services={this.props.services}/>
+					<SignatureVerificationModal services={this.props.services}/>
 				</MDBCardBody>
 			</MDBCard>
 		);
 	}
 }
 
-SignatureInterface.propTypes =
+
+SignatureCard.propTypes =
 {
 	services: PropTypes.object,
 };
 
-export default SignatureInterface;
+export default SignatureCard;

@@ -1,4 +1,4 @@
-.login-view
+#login
 {
 	background-color: #23272b;
 	text-align:       center;
@@ -6,7 +6,7 @@
 	min-width:        100vw;
 }
 
-.login-view .login-card
+#login .login-card
 {
 	position:  fixed;
 	top:       50%;
@@ -17,37 +17,37 @@
 	transform: translate(-50%,-50%);
 }
 
-.login-view .login-header
+#login .login-header
 {
 	display:         flex;
 	align-items:     center;
 	justify-content: center;
 }
 
-.login-view .logo
+#login .logo
 {
 	height: 120px;
 }
 
-.login-view .title
+#login .title
 {
 	color: #FAE900;
 	font-size: 2.5em;
 	font-weight: 700;
 }
 
-.login-view .form-control:focus
+#login .form-control:focus
 {
 	color: #ffffff;
 }
 
-.login-view input
+#login input
 {
 	flex: 1;
 	padding: 12px;
 }
 
-.login-view ul
+#login ul
 {
 	list-style:       none;
 	overflow:         hidden;
@@ -56,27 +56,27 @@
 	padding:          0;
 	margin:           10px 0;
 }
-.login-view li
+#login li
 {
 	text-align:  left;
 	padding:     10px 20px;
 	cursor:      pointer;
 }
-.login-view li.connection::after
+#login li.connection::after
 {
 	font-weight: bold;
 	text-align:  right;
 	float:       right;
 	content:     "Connect";
 }
-.login-view li.creation::after
+#login li.creation::after
 {
 	font-weight: bold;
 	text-align:  right;
 	float:       right;
 	content:     "Create";
 }
-.login-view li:hover
+#login li:hover
 {
 	background-color: #F3E5AB;
 }

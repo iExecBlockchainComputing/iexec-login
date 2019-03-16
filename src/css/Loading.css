@@ -1,4 +1,4 @@
-.loading-view
+#loading
 {
 	display:          flex;
 	position:         fixed;
@@ -9,7 +9,7 @@
 	justify-content:  center;
 	z-index:          999999;
 }
-.path
+#loading .path
 {
 	animation: spinner 1.5s infinite;
 }

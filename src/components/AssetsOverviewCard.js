@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
-import { Contract } from 'ethers';
+import {
+	MDBCard,
+	MDBCardBody,
+	MDBCardHeader,
+	MDBTable,
+	MDBTableBody
+	MDBTableHead,
+} from 'mdbreact';
 
+import { Contract } from 'ethers';
 import ERC20 from 'openzeppelin-solidity/build/contracts/ERC20Detailed.json'
 
-class AssetsOverview extends Component
+class AssetsOverviewCard extends Component
 {
 	constructor(props)
 	{
@@ -55,7 +62,7 @@ class AssetsOverview extends Component
 				</MDBCardHeader>
 				<MDBCardBody>
 					<MDBTable btn fixed hover scrollY maxHeight="30vh">
-						<MDBTableHead color="primary-color" textWhite>
+						<MDBTableHead color="blue-gradient" textWhite>
 							<tr>
 								<th>Name</th>
 								<th>Symbol</th>
@@ -90,9 +97,9 @@ class AssetsOverview extends Component
 	}
 }
 
-AssetsOverview.propTypes =
+AssetsOverviewCard.propTypes =
 {
 	services: PropTypes.object,
 };
 
-export default AssetsOverview;
+export default AssetsOverviewCard;

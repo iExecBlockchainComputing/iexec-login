@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import AccountManagement    from './AccountManagement';
-import AssetsOverview       from './AssetsOverview';
-import TransactionInterface from './TransactionInterface';
-import SignatureInterface   from './SignatureInterface';
+import AccountManagementModal from './AccountManagementModal';
+import AssetsOverviewCard     from './AssetsOverviewCard';
+import TransactionCard        from './TransactionCard';
+import SignatureCard          from './SignatureCard';
 import "../css/Main.css";
 
 class Main extends Component
@@ -14,10 +14,10 @@ class Main extends Component
 		return (
 			<div className="main-view">
 				<div className="container">
-					<AccountManagement    services={this.props.services}/>
-					<AssetsOverview       services={this.props.services}/>
-					<TransactionInterface services={this.props.services}/>
-					<SignatureInterface   services={this.props.services}/>
+					<AccountManagementModal services={this.props.services}/>
+					<AssetsOverviewCard     services={this.props.services}/>
+					<TransactionCard        services={this.props.services}/>
+					<SignatureCard          services={this.props.services}/>
 				</div>
 			</div>
 		);

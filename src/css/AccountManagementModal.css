@@ -1,0 +1,25 @@
+#account-manamgement-modal-trigger
+{
+	position:      absolute;
+	text-align:    center;
+	top:           .5em;
+	right:         .5em;
+	height:        4em;
+	width:         4em;
+	border-radius: 2em;
+	overflow:      visible;
+}
+#account-manamgement-modal-trigger:hover
+{
+	color: #ffffff;
+}
+#account-manamgement-modal-trigger .corner
+{
+	position:  inherit;
+	top:       0em;
+	right:     0em;
+}
+#account-manamgement-modal .modal-footer button
+{
+	margin: 0 auto;
+}

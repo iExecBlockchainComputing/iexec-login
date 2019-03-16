@@ -1,20 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { MDBContainer, MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBRow, MDBCol, MDBIcon } from 'mdbreact';
+import {
+	MDBBtn,
+	MDBCol,
+	MDBIcon,
+	MDBModal,
+	MDBModalBody,
+	MDBModalFooter,
+	MDBModalHeader,
+	MDBRow,
+} from 'mdbreact';
+
 import { utils, Contract } from 'ethers';
 import copy from 'copy-to-clipboard';
 
 import ERC1836 from 'erc1836/build/contracts/ERC1836DelegateBase.json'
+import "../css/AccountManagementModal.css";
 
-import "../css/AccountManagement.css";
-
-class AccountManagement extends Component
+class AccountManagementModal extends Component
 {
 	constructor(props)
 	{
 		super(props);
-		this.state = { modal: false }
+		this.state =
+		{
+			modal: false,
+			delegate_current: null,
+			delegate_valid:   false,
+			delegate_upgrade: false,
+		}
 	}
 
 	toggle()
@@ -91,7 +106,6 @@ class AccountManagement extends Component
 	async disconnect(event)
 	{
 		this.props.services.identity.disconnect().then(() => {
-			this.props.services.emitter.emit('notification', 'error', 'Disconnected');
 			this.props.services.emitter.emit('setView', 'Login');
 		});
 	}
@@ -99,53 +113,60 @@ class AccountManagement extends Component
 	render()
 	{
 		return (
-			<MDBContainer className="accountmanagement-view">
-				<MDBIcon icon="user-circle" className="fa-3x toggle clickable" onClick={this.toggle.bind(this)}></MDBIcon>
-				{ this.state.delegate_upgrade ? <MDBIcon icon="circle" className="fa-1x notification text-warning"/> : null }
+			<>
+				<MDBBtn id="account-manamgement-modal-trigger" floating size="lg" gradient="blue" className="align-middle toggle" onClick={this.toggle.bind(this)}>
+					<MDBIcon icon="fingerprint" size="3x"></MDBIcon>
+					{ this.state.delegate_upgrade ? <MDBIcon icon="circle" size="1x" className="corner text-warning"/> : null }
+				</MDBBtn>
 
-
-				<MDBModal isOpen={this.state.modal} toggle={this.toggle.bind(this)} fullHeight position="right">
+				<MDBModal id="account-manamgement-modal" isOpen={this.state.modal} toggle={this.toggle.bind(this)} fullHeight position="right">
 					<MDBModalHeader toggle={this.toggle.bind(this)}>
 						Account management
 					</MDBModalHeader>
 					<MDBModalBody>
 
-<MDBRow>
-	<MDBCol size="3" className="text-right">Name:</MDBCol>
-	<MDBCol size="9" className="text-left">{ this.props.services.identity.wallet.name }</MDBCol>
-</MDBRow>
-<MDBRow>
-	<MDBCol size="3" className="text-right">Proxy:</MDBCol>
-	<MDBCol size="7" className="text-left"><code className="address">{ this.props.services.identity.wallet.proxy }</code></MDBCol>
-	<MDBCol size="2" className="text-left">
-		{
-			! this.state.delegate_valid
-			? <MDBIcon className="text-danger" icon="times" />
-			: <MDBIcon className="text-success" icon="check" />
-		}
-	</MDBCol>
-</MDBRow>
-<MDBRow>
-	<MDBCol size="3" className="text-right">Deleate:</MDBCol>
-	<MDBCol size="7" className="text-left"><code className="address">{ this.state.delegate_current }</code></MDBCol>
-	<MDBCol size="2" className="text-left">
-		{
-			! this.state.delegate_valid
-			? <MDBIcon className="text-danger" icon="times" />
-			: this.state.delegate_upgrade
-			? <MDBIcon className="text-warning clickable" icon="arrow-circle-up" onClick={this.upgrade.bind(this)}/>
-			: <MDBIcon className="text-success" icon="check" />
-		}
-	</MDBCol>
-</MDBRow>
+						<MDBRow className="blue-gradient rounded shadow m-2 p-1 text-white">
+							<MDBCol>Account details</MDBCol>
+						</MDBRow>
+						<MDBRow>
+							<MDBCol size="3" className="text-right">Name:</MDBCol>
+							<MDBCol size="9" className="text-left">{ this.props.services.identity.wallet.name }</MDBCol>
+						</MDBRow>
+						<MDBRow>
+							<MDBCol size="3" className="text-right">Proxy:</MDBCol>
+							<MDBCol size="7" className="text-left"><code className="address">{ this.props.services.identity.wallet.proxy }</code></MDBCol>
+							<MDBCol size="2" className="text-left">
+								{
+									! this.state.delegate_valid
+									? <MDBIcon className="text-danger" icon="times" />
+									: <MDBIcon className="text-success" icon="check" />
+								}
+							</MDBCol>
+						</MDBRow>
+						<MDBRow>
+							<MDBCol size="3" className="text-right">Deleate:</MDBCol>
+							<MDBCol size="7" className="text-left"><code className="address">{ this.state.delegate_current }</code></MDBCol>
+							<MDBCol size="2" className="text-left">
+								{
+									! this.state.delegate_valid
+									? <MDBIcon className="text-danger" icon="times" />
+									: this.state.delegate_upgrade
+									? <MDBIcon className="text-warning clickable" icon="sync" onClick={this.upgrade.bind(this)}/>
+									: <MDBIcon className="text-success" icon="check" />
+								}
+							</MDBCol>
+						</MDBRow>
+						<hr/>
 
+						<MDBRow className="blue-gradient rounded shadow m-2 p-1 text-white">
+							<MDBCol>Export wallet</MDBCol>
+						</MDBRow>
 						<MDBRow>
 							<MDBCol>
-								<span>Export wallet</span>
 								<form className="md-form input-group" onSubmit={this.export.bind(this)}>
 									<input type="password" name="password" className="form-control" placeholder="password"/>
 									<div className="input-group-append">
-										<MDBBtn color="primary" className="m-0 py-2" type="submit">
+										<MDBBtn gradient="blue" className="m-0 py-2" type="submit">
 											<MDBIcon icon="file-export" className="ml-1" />
 										</MDBBtn>
 									</div>
@@ -158,14 +179,14 @@ class AccountManagement extends Component
 						<MDBBtn color="danger" onClick={this.disconnect.bind(this)}>Disconnect</MDBBtn>
 					</MDBModalFooter>
 				</MDBModal>
-			</MDBContainer>
+			</>
 		);
 	}
 }
 
-AccountManagement.propTypes =
+AccountManagementModal.propTypes =
 {
 	services: PropTypes.object,
 };
 
-export default AccountManagement;
+export default AccountManagementModal;
