@@ -12,12 +12,12 @@ class Main extends Component
 	render()
 	{
 		return (
-			<div className="main-view">
+			<div id="main">
+				<AccountManagementModal services={this.props.services}/>
 				<div className="container">
-					<AccountManagementModal services={this.props.services}/>
-					<AssetsOverviewCard     services={this.props.services}/>
-					<TransactionCard        services={this.props.services}/>
-					<SignatureCard          services={this.props.services}/>
+					<AssetsOverviewCard services={this.props.services}/>
+					<TransactionCard    services={this.props.services}/>
+					<SignatureCard      services={this.props.services}/>
 				</div>
 			</div>
 		);

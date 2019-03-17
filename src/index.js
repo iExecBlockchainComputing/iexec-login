@@ -8,7 +8,6 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import './css/index.css';
 
-
 // require('./css/main.sass');
 
 ReactDOM.render(<App/>, document.getElementById('app'));

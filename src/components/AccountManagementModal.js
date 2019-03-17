@@ -114,12 +114,12 @@ class AccountManagementModal extends Component
 	{
 		return (
 			<>
-				<MDBBtn id="account-manamgement-modal-trigger" floating size="lg" gradient="blue" className="align-middle toggle" onClick={this.toggle.bind(this)}>
+				<MDBBtn id="account-management-modal-trigger" floating size="lg" gradient="blue" className="align-middle toggle" onClick={this.toggle.bind(this)}>
 					<MDBIcon icon="fingerprint" size="3x"></MDBIcon>
 					{ this.state.delegate_upgrade ? <MDBIcon icon="circle" size="1x" className="corner text-warning"/> : null }
 				</MDBBtn>
 
-				<MDBModal id="account-manamgement-modal" isOpen={this.state.modal} toggle={this.toggle.bind(this)} fullHeight position="right">
+				<MDBModal id="account-management-modal" isOpen={this.state.modal} toggle={this.toggle.bind(this)} fullHeight position="right">
 					<MDBModalHeader toggle={this.toggle.bind(this)}>
 						Account management
 					</MDBModalHeader>

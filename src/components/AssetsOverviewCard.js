@@ -34,7 +34,7 @@ class AssetsOverviewCard extends Component
 		this.subscription.remove();
 	}
 
-	async refresh(event)
+	refresh()
 	{
 		this.props.services.provider.getBalance(this.props.services.identity.wallet.proxy)
 		.then(balance => this.setState({balance : (balance/(Math.pow(10,18))).toString()}))
@@ -53,6 +53,12 @@ class AssetsOverviewCard extends Component
 		)
 		.then(assets => this.setState({ assets }))
 		.catch(console.error);
+	}
+
+	forceRefresh(event)
+	{
+		event.preventDefault();
+		this.refresh();
 	}
 
 	render()
@@ -83,7 +89,7 @@ class AssetsOverviewCard extends Component
 							this.state.assets
 							? this.state.assets.map(asset =>
 								<tr key={asset[0]}>
-									<th>{ asset[1] }</th>
+									<th className="overflow-ellipsis">{ asset[1] }</th>
 									<th>{ asset[2] }</th>
 									<th>{ (asset[3]/(Math.pow(10,asset[4]))).toString() }</th>
 									<th><code className="address">{ asset[0] }</code></th>
@@ -93,6 +99,10 @@ class AssetsOverviewCard extends Component
 						}
 						</MDBTableBody>
 					</MDBTable>
+					<MDBBtn gradient="blue" className="m-3 py-2" onClick={this.forceRefresh.bind(this)}>
+						Refresh
+						<MDBIcon icon="sync" className="ml-1" />
+					</MDBBtn>
 					<MDBBtn gradient="ripe-malinka" className="m-3 py-2">
 						Buy tokens
 						<MDBIcon icon="shopping-cart" className="ml-1" />
