@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Notifications from './Notifications';
 import Loading       from './Loading';
 import Login         from './Login';
-import LoginImport   from './LoginImport';
 import Main          from './Main';
 
 import { scrollTo } from '../utils';
@@ -45,8 +44,6 @@ class Root extends Component
 			{
 			  (this.state.view === 'Login')
 			? <Login services={this.props.services}/>
-			: (this.state.view === 'LoginImport')
-			? <LoginImport services={this.props.services}/>
 			: (this.state.view === 'Main')
 			? <Main services={this.props.services}/>
 			: <div>Oups, nothing to render</div>

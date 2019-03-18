@@ -18,6 +18,7 @@ class SignatureModal extends Component
 		this.state =
 		{
 			modal: false,
+			resultmodal: false,
 		}
 	}
 
@@ -26,14 +27,23 @@ class SignatureModal extends Component
 		this.setState({ modal: !this.state.modal });
 	}
 
+	toggleresult()
+	{
+		this.setState({ resultmodal: !this.state.resultmodal });
+	}
+
 	signMessage(event)
 	{
 		event.preventDefault();
 
 		this.props.services.identity.signMessage(event.target.message.value)
 		.then(signature => {
-			console.log("public:",    this.props.services.identity.address());
-			console.log("signature:", signature);
+			this.setState({
+				modal:       false,
+				resultmodal: true,
+				address:     this.props.services.identity.address(),
+				signature:   signature,
+			});
 		})
 		.catch(console.error);
 
@@ -59,6 +69,14 @@ class SignatureModal extends Component
 								<MDBIcon icon="signature" className="ml-1" />
 							</MDBBtn>
 						</form>
+					</MDBModalBody>
+				</MDBModal>
+				<MDBModal id="verifiy-signature-result-modal" isOpen={this.state.resultmodal} toggle={this.toggleresult.bind(this)} centered>
+					<MDBModalHeader toggle={this.toggleresult.bind(this)}>
+						Signature
+					</MDBModalHeader>
+					<MDBModalBody>
+						<code>{this.state.signature}</code>
 					</MDBModalBody>
 				</MDBModal>
 			</>

@@ -12,8 +12,8 @@ import {
 	MDBRow,
 } from 'mdbreact';
 
+import WalletExport from './WalletExport';
 import { utils, Contract } from 'ethers';
-import copy from 'copy-to-clipboard';
 
 import ERC1836 from 'erc1836/build/contracts/ERC1836DelegateBase.json'
 import "../css/AccountManagementModal.css";
@@ -25,7 +25,7 @@ class AccountManagementModal extends Component
 		super(props);
 		this.state =
 		{
-			modal: false,
+			modal:            false,
 			delegate_current: null,
 			delegate_valid:   false,
 			delegate_upgrade: false,
@@ -50,8 +50,8 @@ class AccountManagementModal extends Component
 		])
 		.then(([uuid, delegate]) => {
 			let delegate_current = delegate;
-			let delegate_valid   = uuid === process.env.REACT_APP_DELEGATEUUID;
-			let delegate_upgrade = delegate !== process.env.REACT_APP_DELEGATEADDR;
+			let delegate_valid   = uuid     === this.props.services.config.delegateUUID;
+			let delegate_upgrade = delegate !== this.props.services.config.delegateAddr;
 			this.setState({ delegate_current, delegate_valid, delegate_upgrade });
 			if      (!delegate_valid ) { this.props.services.emitter.emit('notification', 'error',   'Invalid delegate' ); }
 			else if (delegate_upgrade) { this.props.services.emitter.emit('notification', 'warning', 'Upgrade available'); }
@@ -93,16 +93,6 @@ class AccountManagementModal extends Component
 		}
 	}
 
-	async export(event)
-	{
-		event.preventDefault()
-		this.props.services.identity.export(event.target.password.value)
-		.then(encrypted => {
-			copy(encrypted, {  message: 'Press #{key} to copy' })
-		})
-		.catch(console.error);
-	}
-
 	async disconnect(event)
 	{
 		this.props.services.identity.disconnect().then(() => {
@@ -115,7 +105,7 @@ class AccountManagementModal extends Component
 		return (
 			<>
 				<MDBBtn id="account-management-modal-trigger" floating size="lg" gradient="blue" className="align-middle toggle" onClick={this.toggle.bind(this)}>
-					<MDBIcon icon="fingerprint" size="3x"></MDBIcon>
+					<MDBIcon icon="fingerprint" size="3x"/>
 					{ this.state.delegate_upgrade ? <MDBIcon icon="circle" size="1x" className="corner text-warning"/> : null }
 				</MDBBtn>
 
@@ -163,14 +153,7 @@ class AccountManagementModal extends Component
 						</MDBRow>
 						<MDBRow>
 							<MDBCol>
-								<form className="md-form input-group" onSubmit={this.export.bind(this)}>
-									<input type="password" name="password" className="form-control" placeholder="password"/>
-									<div className="input-group-append">
-										<MDBBtn gradient="blue" className="m-0 py-2" type="submit">
-											<MDBIcon icon="file-export" className="ml-1" />
-										</MDBBtn>
-									</div>
-								</form>
+								<WalletExport services={this.props.services}/>
 							</MDBCol>
 						</MDBRow>
 
@@ -179,6 +162,7 @@ class AccountManagementModal extends Component
 						<MDBBtn color="danger" onClick={this.disconnect.bind(this)}>Disconnect</MDBBtn>
 					</MDBModalFooter>
 				</MDBModal>
+
 			</>
 		);
 	}

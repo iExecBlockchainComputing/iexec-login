@@ -48,24 +48,24 @@ class SignatureVerificationModal extends Component
 		let message   = event.target.message.value;
 		let signature = event.target.signature.value;
 		this.toAddress(from).then(resolved => {
-			if (resolved === false)
-			{
-				this.props.services.emitter.emit('notification', 'warning', 'Failled to resolve signer address');
-				return;
-			}
 			try
 			{
-				if (resolved === utils.verifyMessage(message, signature))
+				if (resolved === false)
+				{
+					this.props.services.emitter.emit('notification', 'warning', 'Failled to resolve signer address');
+				}
+				else if (resolved === utils.verifyMessage(message, signature))
 				{
 					this.props.services.emitter.emit('notification', 'success', 'Signature is valid');
-					return;
+				}
+				else
+				{
+					throw "invalid signature";
 				}
 			}
 			catch (e)
-			{ /* let finally handle other cases */ }
-			finally
 			{
-				((new Contract(this.props.services.identity.wallet.proxy, ERC1271.abi, this.props.services.provider))
+				((new Contract(resolved, ERC1271.abi, this.props.services.provider))
 				.isValidSignature(utils.hashMessage(message), signature))
 				.then(result => {
 					if (result)
@@ -78,7 +78,7 @@ class SignatureVerificationModal extends Component
 					}
 				})
 				.catch(e => {
-					this.props.services.emitter.emit('notification', 'error', 'Signature invalid');
+					this.props.services.emitter.emit('notification', 'error', 'Signature invalid (ERC1271 call failled)');
 				});
 			}
 		});

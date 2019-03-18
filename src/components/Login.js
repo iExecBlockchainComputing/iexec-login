@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import { MDBInput } from 'mdbreact';
+import {
+	MDBInput,
+	MDBBtn,
+	MDBIcon,
+	MDBModal,
+	MDBModalBody,
+	MDBModalHeader,
+} from 'mdbreact';
 
 import logo from '../assets/logo.svg';
 import "../css/Login.css";
@@ -12,9 +19,21 @@ class Login extends Component
 	{
 		super(props);
 		this.state = {
+			modal: false,
 			connections: [],
 			creations:   [],
 		};
+	}
+
+	toggle()
+	{
+		this.setState({ modal: !this.state.modal });
+	}
+
+	async import(event)
+	{
+		event.preventDefault()
+		this.props.services.identity.import(event.target.wallet.value, event.target.password.value);
 	}
 
 	async update(event)
@@ -45,40 +64,61 @@ class Login extends Component
 		this.props.services.identity.connect(address);
 	}
 
-	async import(encrypted, password)
-	{
-		this.props.services.identity.import(null, null).catch(console.error);
-	}
-
 	render()
 	{
 		return (
-			<div id="login">
-				<div className="login-card">
-					<div className="login-header">
-						<img src={logo} className="logo" alt="logo" />
-						<span className="title">iExec Login</span>
-					</div>
-					<div className="login-body">
-						<MDBInput label="Username" className="input" onChange={this.update.bind(this)}/>
-						<ul className="shadow">
-						{
-							this.state.connections.map(([ name, address ]) =>
-								<li className="connection" onClick={this.connection.bind(this, address )} key={name}>{name}</li>
-							)
-						}
-						{
-							this.state.creations.map(([ name, address ]) =>
-								<li className="creation" onClick={this.creation.bind(this, name)} key={name}>{name}</li>
-							)
-						}
-						</ul>
+			<>
+				<div id="login">
+					<div className="login-card">
+						<div className="login-header">
+							<img src={logo} className="logo" alt="logo" />
+							<span className="title">iExec Login</span>
+						</div>
+						<div className="login-body">
+							<MDBInput label="Username" className="input" onChange={this.update.bind(this)}/>
+							{
+								this.state.creations.length === 0 && this.state.connections.length === 0 ?
+								<p className="font-small grey-text d-flex justify-content-end">
+									Import <a href="#!" className="dark-grey-text font-weight-bold ml-1" onClick={this.toggle.bind(this)}>wallet</a>
+								</p>
+								:
+								null
+							}
+							<ul className="shadow">
+							{
+								this.state.connections.map(([ name, address ]) =>
+									<li className="connection" onClick={this.connection.bind(this, address )} key={name}>{name}</li>
+								)
+							}
+							{
+								this.state.creations.map(([ name, address ]) =>
+									<li className="creation" onClick={this.creation.bind(this, name)} key={name}>{name}</li>
+								)
+							}
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
+				<MDBModal isOpen={this.state.modal} toggle={this.toggle.bind(this)} centered>
+					<MDBModalHeader toggle={this.toggle.bind(this)}>
+						Import an encrypted wallet
+					</MDBModalHeader>
+					<MDBModalBody>
+						<form className="text-center" onSubmit={this.import.bind(this)}>
+							<MDBInput label="Password" name="password"/>
+							<MDBInput type="textarea" label="Wallet" name="wallet"/>
+							<MDBBtn gradient="blue" className="m-3 py-2" type="submit">
+								Import wallet
+								<MDBIcon icon="file-import" className="ml-1" />
+							</MDBBtn>
+						</form>
+					</MDBModalBody>
+				</MDBModal>
+			</>
 		);
 	}
 }
+							// <WalletImport services={this.props.services}/>
 
 Login.propTypes =
 {
