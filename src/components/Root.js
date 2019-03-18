@@ -40,7 +40,7 @@ class Root extends Component
 		return (
 			<>
 			<Notifications emitter={this.props.services.emitter}/>
-			{ this.state.viewParameters.loading ? <Loading/> : null }
+			{ this.state.viewParameters.loading && <Loading/> }
 			{
 			  (this.state.view === 'Login')
 			? <Login services={this.props.services}/>

@@ -77,12 +77,10 @@ class Login extends Component
 						<div className="login-body">
 							<MDBInput label="Username" className="input" onChange={this.update.bind(this)}/>
 							{
-								this.state.creations.length === 0 && this.state.connections.length === 0 ?
+								this.state.creations.length === 0 && this.state.connections.length === 0 &&
 								<p className="font-small grey-text d-flex justify-content-end">
 									Import <a href="#!" className="dark-grey-text font-weight-bold ml-1" onClick={this.toggle.bind(this)}>wallet</a>
 								</p>
-								:
-								null
 							}
 							<ul className="shadow">
 							{
@@ -118,7 +116,6 @@ class Login extends Component
 		);
 	}
 }
-							// <WalletImport services={this.props.services}/>
 
 Login.propTypes =
 {

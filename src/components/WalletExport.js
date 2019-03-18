@@ -52,7 +52,7 @@ class WalletExport extends Component
 						Wallet export
 					</MDBModalHeader>
 					<MDBModalBody>
-						<code className="address">{this.state.encrypted}</code>
+						<code className="overflow-scrool">{this.state.encrypted}</code>
 					</MDBModalBody>
 				</MDBModal>
 			</>

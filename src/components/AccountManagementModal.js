@@ -72,7 +72,7 @@ class AccountManagementModal extends Component
 		try
 		{
 			const initData   = new utils.Interface(["fakeinitialize()"]).functions.fakeinitialize.encode([]);
-			const updateData = new utils.Interface(["updateDelegate(address,bytes)"]).functions.updateDelegate.encode([ process.env.REACT_APP_DELEGATEADDR, initData ]);
+			const updateData = new utils.Interface(["updateDelegate(address,bytes)"]).functions.updateDelegate.encode([ this.props.services.config.delegateAddr, initData ]);
 			this.props.services.identity.execute({
 				to:    this.props.services.identity.wallet.proxy,
 				data:  updateData,
@@ -106,7 +106,7 @@ class AccountManagementModal extends Component
 			<>
 				<MDBBtn id="account-management-modal-trigger" floating size="lg" gradient="blue" className="align-middle toggle" onClick={this.toggle.bind(this)}>
 					<MDBIcon icon="fingerprint" size="3x"/>
-					{ this.state.delegate_upgrade ? <MDBIcon icon="circle" size="1x" className="corner text-warning"/> : null }
+					{ this.state.delegate_upgrade && <MDBIcon icon="circle" size="1x" className="corner text-warning"/> }
 				</MDBBtn>
 
 				<MDBModal id="account-management-modal" isOpen={this.state.modal} toggle={this.toggle.bind(this)} fullHeight position="right">
@@ -124,7 +124,7 @@ class AccountManagementModal extends Component
 						</MDBRow>
 						<MDBRow>
 							<MDBCol size="3" className="text-right">Proxy:</MDBCol>
-							<MDBCol size="7" className="text-left"><code className="address">{ this.props.services.identity.wallet.proxy }</code></MDBCol>
+							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.props.services.identity.wallet.proxy }</code></MDBCol>
 							<MDBCol size="2" className="text-left">
 								{
 									! this.state.delegate_valid
@@ -135,7 +135,7 @@ class AccountManagementModal extends Component
 						</MDBRow>
 						<MDBRow>
 							<MDBCol size="3" className="text-right">Deleate:</MDBCol>
-							<MDBCol size="7" className="text-left"><code className="address">{ this.state.delegate_current }</code></MDBCol>
+							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.state.delegate_current }</code></MDBCol>
 							<MDBCol size="2" className="text-left">
 								{
 									! this.state.delegate_valid

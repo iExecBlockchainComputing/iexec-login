@@ -11,16 +11,6 @@ code
 {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-code.address
-{
-	display: block;
-	white-space: pre;
-	overflow: scroll;
-}
-code.address::-webkit-scrollbar
-{
-	display: none;
-}
 
 .clickable
 {
@@ -32,4 +22,19 @@ code.address::-webkit-scrollbar
 	white-space:   pre;
 	overflow:      hidden;
 	text-overflow: ellipsis;
+}
+.overflow-hidden
+{
+	white-space:   pre;
+	overflow:      hidden;
+}
+.overflow-scrool
+{
+	display: block;
+	white-space: pre;
+	overflow: scroll;
+}
+.overflow-scrool::-webkit-scrollbar
+{
+	display: none;
 }

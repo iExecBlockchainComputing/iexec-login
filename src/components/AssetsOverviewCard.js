@@ -80,22 +80,20 @@ class AssetsOverviewCard extends Component
 						</MDBTableHead>
 						<MDBTableBody>
 						<tr key="0">
-							<th>Ether</th>
-							<th>ETH</th>
-							<th>{ this.state.balance }</th>
+							<th className="overflow-ellipsis">Ether</th>
+							<th className="overflow-ellipsis">ETH</th>
+							<th className="overflow-ellipsis">{ this.state.balance }</th>
 							<th></th>
 						</tr>
 						{
-							this.state.assets
-							? this.state.assets.map(asset =>
+							this.state.assets && this.state.assets.map(asset =>
 								<tr key={asset[0]}>
 									<th className="overflow-ellipsis">{ asset[1] }</th>
-									<th>{ asset[2] }</th>
-									<th>{ (asset[3]/(Math.pow(10,asset[4]))).toString() }</th>
-									<th><code className="address">{ asset[0] }</code></th>
+									<th className="overflow-ellipsis">{ asset[2] }</th>
+									<th className="overflow-ellipsis">{ (asset[3]/(Math.pow(10,asset[4]))).toString() }</th>
+									<th className="overflow-scrool"><code>{ asset[0] }</code></th>
 								</tr>
 							)
-							: null
 						}
 						</MDBTableBody>
 					</MDBTable>
