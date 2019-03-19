@@ -85,26 +85,15 @@ class WalletManager
 		this.emitter.emit('setView', null, { loading: true });
 		this.sdk.identityExist(name).then(proxy => {
 			this.sdk.connect(proxy).then(privateKey => {
-
-
-
-				const { address } = new ethersWallet(privateKey);
-				console.log(address);
-
-				// console.log("subscription", proxy);
-				// this.subscription = this.sdk.subscribe(
-				// 	'KeyAdded',
-				// 	{ contractAddress: proxy },
-				// 	// { contractAddress: proxy, key: (new ethersWallet(privateKey)).address },
-				// 	() => {
-				// 		// this.onKeyAdded({ name, privateKey, proxy });
-				// 		console.log("KeyAdded!!!");
-				// 	}
-				// );
-
-
-				this.wallet.configure({ name, privateKey, proxy });
-				this.saveToStorage();
+				const subscription = this.sdk.subscribe(
+					'KeyAdded',
+					{ contractAddress: proxy, key: (new ethersWallet(privateKey)).address },
+					() => {
+						subscription.remove();
+						this.wallet.configure({ name, privateKey, proxy });
+						this.saveToStorage();
+					}
+				);
 			})
 			.catch(console.error);
 		})

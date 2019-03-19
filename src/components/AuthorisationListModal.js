@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
 import { utils, Contract } from 'ethers';
-import Identity from 'universal-login-contracts/build/Identity';
+import Identity from 'universal-login-contracts/build/WalletContract';
 
 import {
 	MDBBtn,
@@ -57,41 +57,6 @@ class AuthorisationListModal extends Component
 	accept(request)
 	{
 		this.props.services.emitter.emit('setView', null, { loading: true });
-
-		// const filter = {
-		// 	contractAddress: this.props.services.wallet.proxy,
-		// 	key: request.key
-		// };
-		// const subscription = this.props.services.sdk.subscribe(
-		// 	'KeyAdded',
-		// 	filter,
-		// 	(keyInfo) => {
-		// 		console.log("KeyAdded", keyInfo);
-		// 		subscription.remove();
-		// 	}
-		// );
-
-		// let contract = new Contract(this.props.services.wallet.proxy, Identity.abi, this.props.services.provider);
-		// Promise.all([
-		// 	contract.lastNonce(),
-		// 	contract.keyExist(utils.hexZeroPad(this.props.services.wallet.address(), 32)),
-		// 	contract.keyExist(this.props.services.wallet.address()+"000000000000000000000000"),
-		// 	contract.getKeysByPurpose(1),
-		// 	contract.getKeysByPurpose(2),
-		// ])
-		// .then(console.log)
-		// .catch(console.error);
-
-		this.props.services.wallet.execute({
-			to:   this.props.services.wallet.proxy,
-			data: new utils.Interface(Identity.interface).functions.getKey.encode([ utils.hexZeroPad(request.key, 32), ]),
-		}).then(console.log);
-
-		this.props.services.wallet.execute({
-			to:   this.props.services.wallet.proxy,
-			data: new utils.Interface(Identity.interface).functions.addKey.encode([ utils.hexZeroPad(request.key, 32), 1, 1, ]),
-		});
-
 		this.props.services.sdk.addKey(
 			this.props.services.wallet.proxy,
 			request.key,
