@@ -5,8 +5,9 @@ import {providers} from 'ethers';
 
 import StorageService   from './StorageService';
 import EnsService       from './EnsService';
-import IdentityService  from './IdentityService';
-import ListeningService from './ListeningService';
+import Wallet         from './Wallet';
+import WalletManager  from './WalletManager';
+// import ListeningService from './ListeningService';
 
 class Services
 {
@@ -18,14 +19,15 @@ class Services
 		this.storageService = overrides.storageService || new StorageService();
 		this.sdk            = new EthereumIdentitySDK(this.config.relayerUrl, this.provider);
 		this.ensService     = new EnsService(this.sdk, this.provider, this.config);
-		this.identity       = new IdentityService(this.sdk, this.emitter, this.storageService, this.config);
-		this.listening      = new ListeningService(this.sdk, console.log);
+		this.wallet         = new Wallet(this.sdk, this.emitter, this.config);
+		this.walletManager  = new WalletManager(this.wallet, this.sdk, this.emitter, this.storageService);
+		// this.listening      = new ListeningService(this.sdk, console.log);
 	}
 
 	start()
 	{
 		this.sdk.start();
-		return this.identity.loadIdentity();
+		return this.walletManager.loadFromStorage();
 	}
 
 	stop()

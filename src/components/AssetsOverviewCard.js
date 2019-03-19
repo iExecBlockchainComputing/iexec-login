@@ -36,7 +36,7 @@ class AssetsOverviewCard extends Component
 
 	refresh()
 	{
-		this.props.services.provider.getBalance(this.props.services.identity.wallet.proxy)
+		this.props.services.provider.getBalance(this.props.services.wallet.proxy)
 		.then(balance => this.setState({balance : (balance/(Math.pow(10,18))).toString()}))
 		.catch(console.error);
 
@@ -47,7 +47,7 @@ class AssetsOverviewCard extends Component
 				contract.address,
 				contract.name(),
 				contract.symbol(),
-				contract.balanceOf(this.props.services.identity.wallet.proxy),
+				contract.balanceOf(this.props.services.wallet.proxy),
 				contract.decimals(),
 			]))
 		)

@@ -30,7 +30,7 @@ class WalletExport extends Component
 	async export(event)
 	{
 		event.preventDefault()
-		this.props.services.identity.export(event.target.password.value)
+		this.props.services.walletManager.saveToJSON(event.target.password.value)
 		.then(encrypted => this.setState({ modal: true, encrypted }))
 		.catch(console.error);
 	}

@@ -29,7 +29,7 @@ class TransactionCard extends Component
 	async transaction(event)
 	{
 		event.preventDefault();
-		let to    = event.target.to.value    || this.props.services.identity.wallet.name;
+		let to    = event.target.to.value    || this.props.services.wallet.name;
 		let data  = event.target.data.value  || "0x";
 		let value = event.target.value.value || '0.1';
 		this.toAddress(to).then(resolved => {
@@ -38,7 +38,7 @@ class TransactionCard extends Component
 				this.props.services.emitter.emit('notification', 'warning', 'Failled to resolve destination address');
 				return;
 			}
-			this.props.services.identity.execute({
+			this.props.services.wallet.execute({
 				to:    resolved,
 				data:  data,
 				value: Math.floor(parseFloat(value)*10**18).toString(),
@@ -57,7 +57,7 @@ class TransactionCard extends Component
 				</MDBCardHeader>
 				<MDBCardBody>
 					<form className="col-8 offset-2" onSubmit={this.transaction.bind(this)}>
-						<MDBInput label="to"          name="to"    hint={this.props.services.identity.wallet.name}/>
+						<MDBInput label="to"          name="to"    hint={this.props.services.wallet.name}/>
 						<MDBInput label="value (ETH)" name="value" hint="0.1"/>
 						<MDBInput label="data"        name="data"  hint="0x"/>
 						<MDBBtn gradient="blue" className="m-0 py-2" type="submit">

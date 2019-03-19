@@ -30,12 +30,6 @@ class Login extends Component
 		this.setState({ modal: !this.state.modal });
 	}
 
-	async import(event)
-	{
-		event.preventDefault()
-		this.props.services.identity.import(event.target.wallet.value, event.target.password.value);
-	}
-
 	async update(event)
 	{
 		let [label, node] = event.target.value.split(".");
@@ -54,14 +48,20 @@ class Login extends Component
 		.catch(console.error);
 	}
 
-	async creation(name, event)
+	async import(event)
 	{
-		this.props.services.identity.create(name);
+		event.preventDefault()
+		this.props.services.walletManager.loadFromJSON(event.target.wallet.value, event.target.password.value);
 	}
 
-	async connection(address, event)
+	async creation(name)
 	{
-		this.props.services.identity.connect(address);
+		this.props.services.walletManager.create(name);
+	}
+
+	async connection(address)
+	{
+		this.props.services.walletManager.connect(address);
 	}
 
 	render()
@@ -85,7 +85,7 @@ class Login extends Component
 							<ul className="shadow">
 							{
 								this.state.connections.map(([ name, address ]) =>
-									<li className="connection" onClick={this.connection.bind(this, address )} key={name}>{name}</li>
+									<li className="connection" onClick={this.connection.bind(this, name)} key={name}>{name}</li>
 								)
 							}
 							{

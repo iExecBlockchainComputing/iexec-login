@@ -12,18 +12,6 @@ import SignatureVerificationModal from "./SignatureVerificationModal";
 
 class SignatureCard extends Component
 {
-	signMessage(event)
-	{
-		event.preventDefault();
-		this.props.services.identity.signMessage(event.target.msg.value)
-		.then(signature => {
-			console.log("public:",    this.props.services.identity.address());
-			console.log("signature:", signature);
-		})
-		.catch(console.error);
-
-	}
-
 	render()
 	{
 		return (

@@ -32,16 +32,16 @@ class SignatureModal extends Component
 		this.setState({ resultmodal: !this.state.resultmodal });
 	}
 
-	signMessage(event)
+	sign(event)
 	{
 		event.preventDefault();
 
-		this.props.services.identity.signMessage(event.target.message.value)
+		this.props.services.wallet.sign(event.target.message.value)
 		.then(signature => {
 			this.setState({
 				modal:       false,
 				resultmodal: true,
-				address:     this.props.services.identity.address(),
+				address:     this.props.services.wallet.address(),
 				signature:   signature,
 			});
 		})
@@ -62,7 +62,7 @@ class SignatureModal extends Component
 						Signature verification
 					</MDBModalHeader>
 					<MDBModalBody>
-						<form onSubmit={this.signMessage.bind(this)}>
+						<form onSubmit={this.sign.bind(this)}>
 							<MDBInput type="textarea" label="Message" name="message"/>
 							<MDBBtn gradient="blue" className="m-3 py-2" type="submit">
 								Sign message

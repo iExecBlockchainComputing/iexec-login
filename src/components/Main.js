@@ -5,6 +5,7 @@ import AccountManagementModal from './AccountManagementModal';
 import AssetsOverviewCard     from './AssetsOverviewCard';
 import TransactionCard        from './TransactionCard';
 import SignatureCard          from './SignatureCard';
+import AuthorisationList          from './AuthorisationList';
 import "../css/Main.css";
 
 class Main extends Component
@@ -15,6 +16,7 @@ class Main extends Component
 			<div id="main">
 				<AccountManagementModal services={this.props.services}/>
 				<div className="container">
+					<AuthorisationList  services={this.props.services}/>
 					<AssetsOverviewCard services={this.props.services}/>
 					<TransactionCard    services={this.props.services}/>
 					<SignatureCard      services={this.props.services}/>

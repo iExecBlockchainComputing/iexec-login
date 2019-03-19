@@ -45,8 +45,8 @@ class AccountManagementModal extends Component
 	async refresh()
 	{
 		Promise.all([
-			(new Contract(this.props.services.identity.wallet.proxy, ERC1836.abi, this.props.services.provider)).UUID(),
-			(new Contract(this.props.services.identity.wallet.proxy, ERC1836.abi, this.props.services.provider)).delegate(),
+			(new Contract(this.props.services.wallet.proxy, ERC1836.abi, this.props.services.provider)).UUID(),
+			(new Contract(this.props.services.wallet.proxy, ERC1836.abi, this.props.services.provider)).delegate(),
 		])
 		.then(([uuid, delegate]) => {
 			let delegate_current = delegate;
@@ -73,8 +73,8 @@ class AccountManagementModal extends Component
 		{
 			const initData   = new utils.Interface(["fakeinitialize()"]).functions.fakeinitialize.encode([]);
 			const updateData = new utils.Interface(["updateDelegate(address,bytes)"]).functions.updateDelegate.encode([ this.props.services.config.delegateAddr, initData ]);
-			this.props.services.identity.execute({
-				to:    this.props.services.identity.wallet.proxy,
+			this.props.services.wallet.execute({
+				to:    this.props.services.wallet.proxy,
 				data:  updateData,
 				value: "0",
 			})
@@ -95,9 +95,7 @@ class AccountManagementModal extends Component
 
 	async disconnect(event)
 	{
-		this.props.services.identity.disconnect().then(() => {
-			this.props.services.emitter.emit('setView', 'Login');
-		});
+		this.props.services.walletManager.disconnect();
 	}
 
 	render()
@@ -107,6 +105,7 @@ class AccountManagementModal extends Component
 				<MDBBtn id="account-management-modal-trigger" floating size="lg" gradient="blue" className="align-middle toggle" onClick={this.toggle.bind(this)}>
 					<MDBIcon icon="fingerprint" size="3x"/>
 					{ this.state.delegate_upgrade && <MDBIcon icon="circle" size="1x" className="corner text-warning"/> }
+					{ this.state.pending          && <MDBIcon icon="circle" size="1x" className="corner text-danger"/> }
 				</MDBBtn>
 
 				<MDBModal id="account-management-modal" isOpen={this.state.modal} toggle={this.toggle.bind(this)} fullHeight position="right">
@@ -120,11 +119,11 @@ class AccountManagementModal extends Component
 						</MDBRow>
 						<MDBRow>
 							<MDBCol size="3" className="text-right">Name:</MDBCol>
-							<MDBCol size="9" className="text-left">{ this.props.services.identity.wallet.name }</MDBCol>
+							<MDBCol size="9" className="text-left">{ this.props.services.wallet.name }</MDBCol>
 						</MDBRow>
 						<MDBRow>
 							<MDBCol size="3" className="text-right">Proxy:</MDBCol>
-							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.props.services.identity.wallet.proxy }</code></MDBCol>
+							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.props.services.wallet.proxy }</code></MDBCol>
 							<MDBCol size="2" className="text-left">
 								{
 									! this.state.delegate_valid
@@ -134,7 +133,7 @@ class AccountManagementModal extends Component
 							</MDBCol>
 						</MDBRow>
 						<MDBRow>
-							<MDBCol size="3" className="text-right">Deleate:</MDBCol>
+							<MDBCol size="3" className="text-right">Delegate:</MDBCol>
 							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.state.delegate_current }</code></MDBCol>
 							<MDBCol size="2" className="text-left">
 								{
