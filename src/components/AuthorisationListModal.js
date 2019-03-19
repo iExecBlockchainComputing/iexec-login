@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import { utils, Contract } from 'ethers';
-import Identity from 'universal-login-contracts/build/WalletContract';
-
 import {
 	MDBBtn,
 	MDBIcon,
