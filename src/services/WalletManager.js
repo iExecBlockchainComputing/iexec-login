@@ -73,7 +73,6 @@ class WalletManager
 		this.emitter.emit('setView', null, { loading: true });
 		this.sdk.create(name)
 		.then(([privateKey, proxy]) => {
-			console.log(privateKey, proxy)
 			this.wallet.configure({ name, privateKey, proxy });
 			this.saveToStorage();
 		})
