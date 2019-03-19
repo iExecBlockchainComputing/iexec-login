@@ -1,0 +1,12 @@
+#pending-authorisations-modal-toggle
+{
+	position:      absolute;
+	bottom:        .5em;
+	right:         .5em;
+	height:        4em;
+	border-radius: 2em;
+}
+#pending-authorisations-modal-toggle:hover
+{
+	color: #ffffff;
+}
