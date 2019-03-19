@@ -32,7 +32,7 @@ class Login extends Component
 
 	async update(event)
 	{
-		let [label, node] = event.target.value.split(".");
+		let [label, node] = event.target.value.split(/\.(.+)/);
 		Promise.all(
 			this.props.services.config.ensDomains
 			.filter(domain => label && domain.startsWith(node ? node : ""))
