@@ -103,7 +103,7 @@ class Login extends Component
 					</MDBModalHeader>
 					<MDBModalBody>
 						<form className="text-center" onSubmit={this.import.bind(this)}>
-							<MDBInput label="Password" name="password"/>
+							<MDBInput type="password" label="Password" name="password"/>
 							<MDBInput type="textarea" label="Wallet" name="wallet"/>
 							<MDBBtn gradient="blue" className="m-3 py-2" type="submit">
 								Import wallet

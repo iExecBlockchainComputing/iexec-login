@@ -3,8 +3,8 @@ import {EventEmitter} from 'fbemitter';
 import EthereumIdentitySDK from 'universal-login-sdk';
 import {providers} from 'ethers';
 
-import StorageService   from './StorageService';
-import EnsService       from './EnsService';
+import StorageService from './StorageService';
+import EnsService     from './EnsService';
 import Wallet         from './Wallet';
 import WalletManager  from './WalletManager';
 // import ListeningService from './ListeningService';

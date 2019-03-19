@@ -60,7 +60,7 @@ class SignatureVerificationModal extends Component
 				}
 				else
 				{
-					throw "invalid signature";
+					throw new Error("invalid signature");
 				}
 			}
 			catch (e)

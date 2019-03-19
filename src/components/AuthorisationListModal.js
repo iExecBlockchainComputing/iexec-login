@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import Identity from 'universal-login-contracts/build/Identity'
+import { utils, Contract } from 'ethers';
+import Identity from 'universal-login-contracts/build/Identity';
 
 import {
 	MDBBtn,
 	MDBIcon,
 	MDBModal,
-	MDBModalBody,
-	MDBModalHeader,
 	MDBTable,
 	MDBTableBody,
 	MDBTableHead,
@@ -40,7 +39,11 @@ class AuthorisationListModal extends Component
 	handleAuthorisations(pendingAuthorisations)
 	{
 		this.setState({ pendingAuthorisations });
-		if (!pendingAuthorisations)
+		if (!!pendingAuthorisations)
+		{
+			// this.props.services.emitter.emit('notification', 'info', 'Access request received')
+		}
+		else
 		{
 			this.setState({ modal: false });
 		}
@@ -53,36 +56,73 @@ class AuthorisationListModal extends Component
 
 	accept(request)
 	{
-		// console.log(request)
-		// console.log(Identity)
+		this.props.services.emitter.emit('setView', null, { loading: true });
 
-		const filter = {
-			contractAddress: this.props.services.wallet.proxy,
-			key: request.key
-		};
-		const subscription = this.props.services.sdk.subscribe(
-			'KeyAdded',
-			filter,
-			(keyInfo) => {
-				console.log("KeyAdded", keyInfo);
-				subscription.remove();
-			}
-		);
+		// const filter = {
+		// 	contractAddress: this.props.services.wallet.proxy,
+		// 	key: request.key
+		// };
+		// const subscription = this.props.services.sdk.subscribe(
+		// 	'KeyAdded',
+		// 	filter,
+		// 	(keyInfo) => {
+		// 		console.log("KeyAdded", keyInfo);
+		// 		subscription.remove();
+		// 	}
+		// );
 
+		// let contract = new Contract(this.props.services.wallet.proxy, Identity.abi, this.props.services.provider);
+		// Promise.all([
+		// 	contract.lastNonce(),
+		// 	contract.keyExist(utils.hexZeroPad(this.props.services.wallet.address(), 32)),
+		// 	contract.keyExist(this.props.services.wallet.address()+"000000000000000000000000"),
+		// 	contract.getKeysByPurpose(1),
+		// 	contract.getKeysByPurpose(2),
+		// ])
+		// .then(console.log)
+		// .catch(console.error);
+
+		this.props.services.wallet.execute({
+			to:   this.props.services.wallet.proxy,
+			data: new utils.Interface(Identity.interface).functions.getKey.encode([ utils.hexZeroPad(request.key, 32), ]),
+		}).then(console.log);
+
+		this.props.services.wallet.execute({
+			to:   this.props.services.wallet.proxy,
+			data: new utils.Interface(Identity.interface).functions.addKey.encode([ utils.hexZeroPad(request.key, 32), 1, 1, ]),
+		});
 
 		this.props.services.sdk.addKey(
 			this.props.services.wallet.proxy,
 			request.key,
 			this.props.services.wallet.privateKey,
 			{
-				// transactionDetails,
 				gasToken: this.props.services.config.gasToken,
 				gasPrice: 1000000000,
 				gasLimit: 1000000,
 			},
 		)
-		.then(console.log)
-		.catch(console.error);
+		.then(() => this.props.services.emitter.emit('tx'))
+		.catch(console.error)
+		.finally(() => this.props.services.emitter.emit('setView', null, { loading: false }));
+	}
+
+	acceptAll()
+	{
+		this.props.services.emitter.emit('setView', null, { loading: true });
+		this.props.services.sdk.addKeys(
+			this.props.services.wallet.proxy,
+			this.state.pendingAuthorisations.map(request => request.key),
+			this.props.services.wallet.privateKey,
+			{
+				gasToken: this.props.services.config.gasToken,
+				gasPrice: 1000000000,
+				gasLimit: 1000000,
+			},
+		)
+		.then(() => this.props.services.emitter.emit('tx'))
+		.catch(console.error)
+		.finally(() => this.props.services.emitter.emit('setView', null, { loading: false }));
 	}
 
 	reject(request)
@@ -91,6 +131,11 @@ class AuthorisationListModal extends Component
 			this.props.services.wallet.proxy,
 			request.key,
 		);
+	}
+
+	rejectAll(request)
+	{
+		this.state.pendingAuthorisations.forEach(this.reject.bind(this));
 	}
 
 	render()
@@ -109,7 +154,11 @@ class AuthorisationListModal extends Component
 								<th>Browser</th>
 								<th>OS</th>
 								<th>City</th>
-								<th></th>
+								<th>Key</th>
+								<th>
+									<a href="#!" onClick={this.acceptAll.bind(this)}><MDBIcon className="ml-2 text-success" icon="check"/></a>
+									<a href="#!" onClick={this.rejectAll.bind(this)}><MDBIcon className="ml-2 text-danger"  icon="times"/></a>
+								</th>
 							</tr>
 						</MDBTableHead>
 						<MDBTableBody>
@@ -120,13 +169,10 @@ class AuthorisationListModal extends Component
 										<td>{request.deviceInfo.browser}</td>
 										<td>{request.deviceInfo.os}</td>
 										<td>{request.deviceInfo.city}</td>
+										<td className="overflow-scrool"><code>{request.key}</code></td>
 										<td>
-											<a href="#!" onClick={this.accept.bind(this, request)}>
-												<MDBIcon className="ml-2 text-success" icon="check"/>
-												</a>
-											<a href="#!" onClick={this.reject.bind(this, request)}>
-												<MDBIcon className="ml-2 text-danger"  icon="times"/>
-												</a>
+											<a href="#!" onClick={this.accept.bind(this, request)}><MDBIcon className="ml-2 text-success" icon="check"/></a>
+											<a href="#!" onClick={this.reject.bind(this, request)}><MDBIcon className="ml-2 text-danger"  icon="times"/></a>
 										</td>
 									</tr>
 								)

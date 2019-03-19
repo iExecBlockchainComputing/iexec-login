@@ -44,9 +44,11 @@ class Wallet
 		}
 	}
 
-	async execute(tx)
+	execute(tx)
 	{
 		tx.from     = tx.from     || this.proxy;
+		tx.value    = tx.value    || 0;
+		tx.data     = tx.data     || "0x";
 		tx.gasToken = tx.gasToken || this.config.gasToken;
 		tx.gasPrice = tx.gasPrice || 1000000000;
 		tx.gasLimit = tx.gasLimit || 1000000;
