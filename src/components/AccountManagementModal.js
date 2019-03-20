@@ -71,8 +71,8 @@ class AccountManagementModal extends Component
 		event.preventDefault()
 		try
 		{
-			const initData   = new utils.Interface(["fakeinitialize()"]).functions.fakeinitialize.encode([]);
-			const updateData = new utils.Interface(["updateDelegate(address,bytes)"]).functions.updateDelegate.encode([ this.props.services.config.delegateAddr, initData ]);
+			const initData   = new utils.Interface(["initializeQAD()"]).functions.initializeQAD.encode([]);
+			const updateData = new utils.Interface(["updateDelegateQAD(address,bytes)"]).functions.updateDelegateQAD.encode([ this.props.services.config.delegateAddr, initData ]);
 			this.props.services.wallet.execute({
 				to:    this.props.services.wallet.proxy,
 				data:  updateData,
