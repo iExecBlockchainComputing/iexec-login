@@ -81,7 +81,7 @@ class TransferModal extends Component
 	{
 		return (
 			<>
-				<a href="#" onClick={this.toggle.bind(this)}>
+				<a href="#!" onClick={this.toggle.bind(this)}>
 					<MDBIcon icon="paper-plane" className="ml-1" />
 				</a>
 				<MDBModal isOpen={this.state.modal} toggle={this.toggle.bind(this)} centered>
