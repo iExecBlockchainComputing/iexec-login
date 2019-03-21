@@ -35,7 +35,7 @@ class TransactionCard extends Component
 		this.toAddress(to).then(resolved => {
 			if (resolved === false)
 			{
-				this.props.services.emitter.emit('notification', 'warning', 'Failled to resolve destination address');
+				this.props.services.emitter.emit('notification', 'error', 'Failled to resolve destination address');
 				return;
 			}
 			this.props.services.wallet.execute({

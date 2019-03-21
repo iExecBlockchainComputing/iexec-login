@@ -12,6 +12,8 @@ import {
 	MDBTableHead,
 } from 'mdbreact';
 
+import TransferModal from './TransferModal';
+
 import { Contract } from 'ethers';
 import ERC20 from 'openzeppelin-solidity/build/contracts/ERC20Detailed.json'
 
@@ -61,6 +63,11 @@ class AssetsOverviewCard extends Component
 		this.refresh();
 	}
 
+	transfer(address)
+	{
+		console.log(address)
+	}
+
 	render()
 	{
 		return (
@@ -75,7 +82,7 @@ class AssetsOverviewCard extends Component
 								<th>Name</th>
 								<th>Symbol</th>
 								<th>Balance</th>
-								<th>Address</th>
+								<th>Transfer</th>
 							</tr>
 						</MDBTableHead>
 						<MDBTableBody>
@@ -83,7 +90,9 @@ class AssetsOverviewCard extends Component
 							<th className="overflow-ellipsis">Ether</th>
 							<th className="overflow-ellipsis">ETH</th>
 							<th className="overflow-ellipsis">{ this.state.balance }</th>
-							<th></th>
+							<th>
+								<TransferModal services={this.props.services} asset={[null, "Ether", "ETH", null, 18]} />
+							</th>
 						</tr>
 						{
 							this.state.assets && this.state.assets.map(asset =>
@@ -91,7 +100,9 @@ class AssetsOverviewCard extends Component
 									<th className="overflow-ellipsis">{ asset[1] }</th>
 									<th className="overflow-ellipsis">{ asset[2] }</th>
 									<th className="overflow-ellipsis">{ (asset[3]/(Math.pow(10,asset[4]))).toString() }</th>
-									<th className="overflow-scrool"><code>{ asset[0] }</code></th>
+									<th>
+										<TransferModal services={this.props.services} asset={asset}/>
+									</th>
 								</tr>
 							)
 						}
