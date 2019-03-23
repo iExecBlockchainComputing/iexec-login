@@ -15,7 +15,7 @@ import {
 import WalletExport from './WalletExport';
 import { utils, Contract } from 'ethers';
 
-import ERC1836 from 'erc1836/build/contracts/ERC1836DelegateBase.json'
+import IMaster from 'erc1836/build/contracts/IMaster.json'
 import "../css/AccountManagementModal.css";
 
 class AccountManagementModal extends Component
@@ -45,8 +45,8 @@ class AccountManagementModal extends Component
 	async refresh()
 	{
 		Promise.all([
-			(new Contract(this.props.services.wallet.proxy, ERC1836.abi, this.props.services.provider)).UUID(),
-			(new Contract(this.props.services.wallet.proxy, ERC1836.abi, this.props.services.provider)).delegate(),
+			(new Contract(this.props.services.wallet.proxy, IMaster.abi, this.props.services.provider)).UUID(),
+			(new Contract(this.props.services.wallet.proxy, IMaster.abi, this.props.services.provider)).master(),
 		])
 		.then(([uuid, delegate]) => {
 			let delegate_current = delegate;

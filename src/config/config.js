@@ -9,10 +9,10 @@ module.exports = Object.freeze({
 		"users.iexec.eth",
 	],
 	assets: [
-		"0x915fB4bF4C23a3DEC36C140a7E73dCF85C6D9e22",
+		"0xD3C4A8F56538e07Be4522D20A6410c2c4e4B26a6",
 	],
-	gasToken:     "0x915fB4bF4C23a3DEC36C140a7E73dCF85C6D9e22",
-	delegateUUID: "0xa1e3d116360d73112f374a2ed4cd95388cd39eaf5a7986eb95efa60ae0ffda4d",
-	delegateAddr: "0xD3C4A8F56538e07Be4522D20A6410c2c4e4B26a6",
+	gasToken:     "0xD3C4A8F56538e07Be4522D20A6410c2c4e4B26a6",
+	delegateUUID: "0x26b8c8548d7daec1fffc293834f2cee70c6b9ca8d5c456721fc1fdf9b10dd909",
+	delegateAddr: "0x0E2365e86A50377c567E1a62CA473656f0029F1e",
 
 });

@@ -3679,22 +3679,15 @@ enhanced-resolve@^4.1.0:
     memory-fs "^0.4.0"
     tapable "^1.0.0"
 
-ens-builder@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ens-builder/-/ens-builder-2.0.0.tgz#30b26b6a83795694ffaec62a65059ffa7da36ff8"
-  integrity sha512-/OBTr2sbSA21kvdX4TIwCzV/WS6Rxph27fU3wSff5IfCYtWT024WfqbgfK1sB51rWJz7BL+g2Fikhyu6xm507w==
-  dependencies:
-    ethers "^4.0"
-
 entities@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
-erc1836@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/erc1836/-/erc1836-0.0.7.tgz#53c5a0291c45fe452c053dcecdbef9d50d74e1cf"
-  integrity sha512-WPHjFqn8yhoGoGp+FychPd6RhPgA6jzYzlxYNjAggPw/P30oT4EDL7iSex+B6ZE3FszJg+TfZzATQBB3Ifo6iw==
+erc1836@0.0.8-1:
+  version "0.0.8-1"
+  resolved "https://registry.yarnpkg.com/erc1836/-/erc1836-0.0.8-1.tgz#e2fa07328ced6654024298dffcdac403b6d7fe3c"
+  integrity sha512-jW20stW4UsJa/s39cN14J5c/Vkhsf17+p7LB4gO+I38G4i9+ppXcu6pRkGnkFXMeCfig7a1KQJ2BcqE3fbfjlw==
 
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
@@ -4047,7 +4040,7 @@ ethereumjs-testrpc@^6.0.3:
   dependencies:
     webpack "^3.0.0"
 
-ethers@^4.0, ethers@^4.0.27:
+ethers@^4.0.27:
   version "4.0.27"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.27.tgz#e570b0da9d805ad65c83d81919abe02b2264c6bf"
   integrity sha512-+DXZLP/tyFnXWxqr2fXLT67KlGUfLuvDkHSOtSC9TUVG9OIj6yrG5JPeXRMYo15xkOYwnjgdMKrXp5V94rtjJA==
@@ -4348,14 +4341,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbemitter@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/fbemitter/-/fbemitter-2.1.1.tgz#523e14fdaf5248805bb02f62efc33be703f51865"
-  integrity sha1-Uj4U/a9SSIBbsC9i78M75wP1GGU=
-  dependencies:
-    fbjs "^0.8.4"
-
-fbjs@^0.8.0, fbjs@^0.8.1, fbjs@^0.8.12, fbjs@^0.8.4:
+fbjs@^0.8.0, fbjs@^0.8.1, fbjs@^0.8.12:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
@@ -7243,11 +7229,6 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
-
-node-fetch@^2.2.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
-  integrity sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
 
 node-forge@0.7.5:
   version "0.7.5"
@@ -10858,24 +10839,6 @@ universal-cookie@^3.0.7:
     "@types/object-assign" "^4.0.30"
     cookie "^0.3.1"
     object-assign "^4.1.0"
-
-universal-login-contracts@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/universal-login-contracts/-/universal-login-contracts-0.1.4.tgz#46340ab335f0708cc19998e3aedc9d45e8206f95"
-  integrity sha512-F6Ebg19EWuTSrqzcTqpBNKwEmvFEf487G3duCRLsyf6Mom2f4/pMp7n5gauwHKmhNy32VRfHxpjgwpnLnXeDxg==
-  dependencies:
-    ens-builder "^2.0.0"
-
-universal-login-sdk@^0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/universal-login-sdk/-/universal-login-sdk-0.1.11.tgz#725042c1a8285543ff5f13d2b0769cdafb98110d"
-  integrity sha512-JOG40kS2tCZRpkx2UR8mi1p5aFXySFNs0xAKrYnsqiWG7glcmDQXeek8gGXE/ZxamWyrhNbJ2BUSpAwVNOsfoQ==
-  dependencies:
-    deep-equal "^1.0.1"
-    ethers "^4.0"
-    fbemitter "^2.1.1"
-    node-fetch "^2.2.0"
-    universal-login-contracts "^0.1.4"
 
 universalify@^0.1.0:
   version "0.1.2"
