@@ -26,9 +26,9 @@ class AccountManagementModal extends Component
 		this.state =
 		{
 			modal:            false,
-			delegate_current: null,
-			delegate_valid:   false,
-			delegate_upgrade: false,
+			master_current: null,
+			master_valid:   false,
+			master_upgrade: false,
 		}
 	}
 
@@ -45,22 +45,22 @@ class AccountManagementModal extends Component
 	async refresh()
 	{
 		Promise.all([
-			(new Contract(this.props.services.wallet.proxy, IMaster.abi, this.props.services.provider)).UUID(),
 			(new Contract(this.props.services.wallet.proxy, IMaster.abi, this.props.services.provider)).master(),
+			(new Contract(this.props.services.wallet.proxy, IMaster.abi, this.props.services.provider)).masterId(),
 		])
-		.then(([uuid, delegate]) => {
-			let delegate_current = delegate;
-			let delegate_valid   = uuid     === this.props.services.config.delegateUUID;
-			let delegate_upgrade = delegate !== this.props.services.config.delegateAddr;
-			this.setState({ delegate_current, delegate_valid, delegate_upgrade });
-			if      (!delegate_valid ) { this.props.services.emitter.emit('notification', 'error',   'Invalid delegate' ); }
-			else if (delegate_upgrade) { this.props.services.emitter.emit('notification', 'warning', 'Upgrade available'); }
+		.then(([master, masterId]) => {
+			let master_current = master;
+			let master_valid   = masterId === this.props.services.config.masterId;
+			let master_upgrade = master   !== this.props.services.config.masterAddr;
+			this.setState({ master_current, master_valid, master_upgrade });
+			if      (!master_valid ) { this.props.services.emitter.emit('notification', 'error',   'Invalid master' ); }
+			else if (master_upgrade) { this.props.services.emitter.emit('notification', 'warning', 'Upgrade available'); }
 		})
 		.catch(e => {
 			this.setState({
-				delegate_current: null,
-				delegate_valid:   false,
-				delegate_upgrade: false,
+				master_current: null,
+				master_valid:   false,
+				master_upgrade: false,
 			});
 			console.error(e);
 		});
@@ -71,8 +71,8 @@ class AccountManagementModal extends Component
 		event.preventDefault()
 		try
 		{
-			const initData   = new utils.Interface(["initializeQAD()"]).functions.initializeQAD.encode([]);
-			const updateData = new utils.Interface(["updateDelegateQAD(address,bytes)"]).functions.updateDelegateQAD.encode([ this.props.services.config.delegateAddr, initData ]);
+			const initData   = new utils.Interface(["initialize()"]).functions.initialize.encode([]);
+			const updateData = new utils.Interface(["updateMaster(address,bytes)"]).functions.updateMaster.encode([ this.props.services.config.masterAddr, initData, false ]);
 			this.props.services.wallet.execute({
 				to:    this.props.services.wallet.proxy,
 				data:  updateData,
@@ -104,7 +104,7 @@ class AccountManagementModal extends Component
 			<>
 				<MDBBtn id="account-management-modal-trigger" floating size="lg" gradient="blue" className="align-middle toggle" onClick={this.toggle.bind(this)}>
 					<MDBIcon icon="fingerprint" size="3x"/>
-					{ this.state.delegate_upgrade && <MDBIcon icon="circle" size="1x" className="corner text-warning"/> }
+					{ this.state.master_upgrade && <MDBIcon icon="circle" size="1x" className="corner text-warning"/> }
 					{ this.state.pending          && <MDBIcon icon="circle" size="1x" className="corner text-danger"/> }
 				</MDBBtn>
 
@@ -126,7 +126,7 @@ class AccountManagementModal extends Component
 							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.props.services.wallet.proxy }</code></MDBCol>
 							<MDBCol size="2" className="text-left">
 								{
-									! this.state.delegate_valid
+									! this.state.master_valid
 									? <MDBIcon className="text-danger" icon="times" />
 									: <MDBIcon className="text-success" icon="check" />
 								}
@@ -134,12 +134,12 @@ class AccountManagementModal extends Component
 						</MDBRow>
 						<MDBRow>
 							<MDBCol size="3" className="text-right">Delegate:</MDBCol>
-							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.state.delegate_current }</code></MDBCol>
+							<MDBCol size="7" className="text-left overflow-scrool"><code>{ this.state.master_current }</code></MDBCol>
 							<MDBCol size="2" className="text-left">
 								{
-									! this.state.delegate_valid
+									! this.state.master_valid
 									? <MDBIcon className="text-danger" icon="times" />
-									: this.state.delegate_upgrade
+									: this.state.master_upgrade
 									? <MDBIcon className="text-warning clickable" icon="sync" onClick={this.upgrade.bind(this)}/>
 									: <MDBIcon className="text-success" icon="check" />
 								}
