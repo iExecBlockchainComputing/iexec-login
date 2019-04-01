@@ -31,14 +31,17 @@ class TransferModal extends Component
 
 	toAddress(address)
 	{
-		try
-		{
-			return utils.getAddress(address);
-		}
-		catch (e)
-		{
-			return this.props.services.sdk.resolveName(address);
-		}
+		const sdk = this.props.services.sdk;
+		return new Promise(function(resolve, reject) {
+			try
+			{
+				resolve(utils.getAddress(address));
+			}
+			catch (e)
+			{
+				sdk.resolveName(address).then(resolve).catch(reject);
+			}
+		});
 	}
 
 	transfer(event)
