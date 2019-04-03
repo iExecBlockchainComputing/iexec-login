@@ -82,7 +82,7 @@ class WalletManager
 	connect(name)
 	{
 		this.emitter.emit('setView', null, { loading: true });
-		this.sdk.identityExist(name).then(proxy => {
+		this.sdk.walletContractExist(name).then(proxy => {
 			this.sdk.connect(proxy).then(privateKey => {
 				const subscription = this.sdk.subscribe(
 					'KeyAdded',

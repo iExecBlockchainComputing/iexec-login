@@ -37,7 +37,7 @@ class Login extends Component
 			this.props.services.config.ensDomains
 			.filter(domain => label && domain.startsWith(node ? node : ""))
 			.map(domain => [label, domain].join('.'))
-			.map(name => this.props.services.sdk.identityExist(name).then(address => [name, address]))
+			.map(name => this.props.services.sdk.walletContractExist(name).then(address => [name, address]))
 		)
 		.then(results => {
 			this.setState({
