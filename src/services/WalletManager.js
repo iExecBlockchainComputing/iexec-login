@@ -82,19 +82,26 @@ class WalletManager
 	connect(name)
 	{
 		this.emitter.emit('setView', null, { loading: true });
-		this.sdk.walletContractExist(name).then(proxy => {
-			this.sdk.connect(proxy).then(privateKey => {
-				const subscription = this.sdk.subscribe(
-					'KeyAdded',
-					{ contractAddress: proxy, key: (new ethersWallet(privateKey)).address },
-					() => {
-						subscription.remove();
-						this.wallet.configure({ name, privateKey, proxy });
-						this.saveToStorage();
-					}
-				);
-			})
-			.catch(console.error);
+		this.sdk.getWalletContractAddress(name).then(proxy => {
+			if (proxy != null)
+			{
+				this.sdk.connect(proxy).then(privateKey => {
+					const subscription = this.sdk.subscribe(
+						'KeyAdded',
+						{ contractAddress: proxy, key: (new ethersWallet(privateKey)).address },
+						() => {
+							subscription.remove();
+							this.wallet.configure({ name, privateKey, proxy });
+							this.saveToStorage();
+						}
+					);
+				})
+				.catch(console.error);
+			}
+			else
+			{
+				console.error("connection target isn't a valid wallet `", name ,"`");
+			}
 		})
 		.catch(console.error);
 	}
